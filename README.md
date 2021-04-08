@@ -3,7 +3,9 @@
 ---
 
 Link: https://data.cityofnewyork.us/Public-Safety/NYPD-Hate-Crimes/bqiq-cu78
+
 Última atualização: January 25, 2021
+
 Linhas: 728
 Colunas: 15
 
