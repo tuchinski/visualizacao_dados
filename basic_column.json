@@ -1,0 +1,131 @@
+{
+    "chart": {
+        "type": "column"
+    },
+    "title": {
+        "text": "Crimes de \u00f3dio em NYC"
+    },
+    "subtitle": {
+        "text": "Categoria da Ofensa por bairro"
+    },
+    "series": [
+        {
+            "name": "Sexual Orientation",
+            "data": [
+                12,
+                27,
+                41,
+                20,
+                4
+            ]
+        },
+        {
+            "name": "Race/Color",
+            "data": [
+                17,
+                34,
+                64,
+                22,
+                15
+            ]
+        },
+        {
+            "name": "Religion/Religious Practice",
+            "data": [
+                29,
+                208,
+                101,
+                72,
+                10
+            ]
+        },
+        {
+            "name": "Ethnicity/National Origin/Ancestry",
+            "data": [
+                3,
+                11,
+                9,
+                8,
+                3
+            ]
+        },
+        {
+            "name": "Gender",
+            "data": [
+                3,
+                19,
+                5,
+                7,
+                0
+            ]
+        },
+        {
+            "name": "Other",
+            "data": [
+                0,
+                3,
+                2,
+                0,
+                0
+            ]
+        },
+        {
+            "name": "Unclassified",
+            "data": [
+                0,
+                0,
+                4,
+                0,
+                0
+            ]
+        },
+        {
+            "name": "Age",
+            "data": [
+                0,
+                0,
+                0,
+                2,
+                0
+            ]
+        },
+        {
+            "name": "Disability",
+            "data": [
+                0,
+                0,
+                2,
+                0,
+                0
+            ]
+        }
+    ],
+    "xAxis": {
+        "categories": [
+            "BRONX",
+            "KINGS",
+            "NEW YORK",
+            "QUEENS",
+            "RICHMOND"
+        ]
+    },
+    "yAxis": {
+        "min": 0,
+        "title": {
+            "text": "Quantidade crimes"
+        }
+    },
+    "tooltip": {
+        "headerFormat": "<span style=\"font-size:10px\">{point.key}</span><table>",
+        "pointFormat": "<tr><td style=\"color:{series.color};padding:0\">{series.name}: </td><td style=\"padding:0\"><b>{point.y} mm</b></td></tr>",
+        "footerFormat": "</table>",
+        "shared": true,
+        "useHTML": true
+    },
+    "plotOptions": {
+        "column": {
+            "pointPadding": 0.2,
+            "borderWidth": 0
+        }
+    }
+}

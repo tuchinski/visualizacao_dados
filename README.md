@@ -14,6 +14,11 @@ Colunas: 15
 ## Link da primeira visualização https://jsfiddle.net/tuchinski12/jab3qxo2/1/
 ### Link da referência da primeira visualização https://www.highcharts.com/demo/parliament-chart
 
+## Link da segunda visualização https://jsfiddle.net/tuchinski12/3rv0exoq/19/
+### Link da referência da segunda visualização https://www.highcharts.com/demo/column-basic/grid-light
+
+## Outra visaualização com os mesmos dados da segunda https://jsfiddle.net/tuchinski12/ud6zyqrj/3/
+
 ### Infos importantes da tabela
 Nome Coluna   				| Descrição 									| Tipo Variável | Nome campo API
 --------------------- 				| ------------ 									| ------------ | ---------

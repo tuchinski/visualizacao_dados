@@ -155,9 +155,20 @@ categorias = {
     ]
 }
 
+
+def get_data_api(url):
+    """
+        Busca os dados na API, e transforma o JSON pra um dict de Python
+    """
+    json_raw = requests.get(url)
+    return json.loads(json_raw.text)
+
 def main():
-    json_raw = requests.get('https://data.cityofnewyork.us/resource/bqiq-cu78.json')
-    dados_json = json.loads(json_raw.text)
+    """
+        Busca as informações via api, e extrai os dados da categoria de crime de ódio ou preconceito  
+    """
+
+    dados_json = get_data_api('https://data.cityofnewyork.us/resource/bqiq-cu78.json')
 
     for dado in dados_json:
         try:
