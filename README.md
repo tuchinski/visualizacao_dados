@@ -7,7 +7,12 @@ Link: https://data.cityofnewyork.us/Public-Safety/NYPD-Hate-Crimes/bqiq-cu78
 Linhas: 728
 Colunas: 15
 
+---
 
+## Link da primeira visualização https://jsfiddle.net/tuchinski12/jab3qxo2/1/
+### Link da referência da primeira visualização
+
+### Infos importantes da tabela
 Nome Coluna   				| Descrição 									| Tipo Variável | Nome campo API
 --------------------- 				| ------------ 									| ------------ | ---------
 Full Complaint ID 				| Identificador para cada incidente de crime de ódio 	| Texto	  | full_complaint_id
