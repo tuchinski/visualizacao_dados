@@ -2,129 +2,6 @@
 import requests
 import json
 
-# categorias = {
-#     '50 YEARS OLD OR MORE' :{
-#         'traducao': "50+ ANOS",
-#         'qtde' = 0,
-#         'color' = '#14ebce'
-#     } 
-#     'ANTI-MULTI RACIAL GROUPS' :{
-#         'traducao': "ANTI MULTI GRUPOS RACIAIS",
-#         'qtde' = 0,
-#         'color' = '#eb0b4c'
-#     } 
-#     'ANTI-BLACK' :{
-#         'traducao': "ANTI-NEGROS",
-#         'qtde' = 0,
-#         'color' = '#b7450e'
-#     } 
-#     'ANTI-OTHER ETHNICITY' :{
-#         'traducao': "ANTI OUTROS GRUPOS ETINICOS",
-#         'qtde' = 0,
-#         'color' = '#07c4d3'
-#     } 
-#     'ANTI-LGBT(MIXED GROUP)' :{
-#         'traducao': "ANTI LGBT (GRUPOS MISTOS)",
-#         'qtde' = 0,
-#         'color' = '#4e8c0a'
-#     } 
-#     'ANTI-ARAB' :{
-#         'traducao': "ANTI-ARÁBICOS",
-#         'qtde' = 0,
-#         'color' = '#b76ec4'
-#     } 
-#     'ANTI-OTHER RELIGION' :{
-#         'traducao': "ANTI OUTRAS RELIGIÕES",
-#         'qtde' = 0,
-#         'color' = '#f40325'
-#     } 
-#     'ANTI-FEMALE' :{
-#         'traducao': "DISCRIMINACAO CONTRA MULHER",
-#         'qtde' = 0,
-#         'color' = '#529803'
-#     } 
-#     'ANTI-RELIGIOUS PRACTICE GENERALLY' :{
-#         'traducao': "ANTI-PRÁTICAS RELIGIOSAS",
-#         'qtde' = 0,
-#         'color' = '#4bcc24'
-#     } 
-#     'ANTI-MALE HOMOSEXUAL(GAY)' :{
-#         'traducao': "ANTI-HOMOSSEXSUAIS(HOMENS)",
-#         'qtde' = 0,
-#         'color' = '#50385b'
-#     } 
-#     'ANTI-JEWISH' :{
-#         'traducao': "ANTISSEMITISMO",
-#         'qtde' = 0,
-#         'color' = '#cbb896'
-#     } 
-#     'ANTI-ISLAMIC(MUSLIM)' :{
-#         'traducao': "ANTI-ISLÂMICOS",
-#         'qtde' = 0,
-#         'color' = '#c8fe61'
-#     } 
-#     'ANTI-CATHOLIC' :{
-#         'traducao': "ANTI-CATÓLICOS",
-#         'qtde' = 0,
-#         'color' = '#94265c'
-#     } 
-#     'ANTI-ASIAN' :{
-#         'traducao': "ANTI-ASIÁTICOS",
-#         'qtde' = 0,
-#         'color' = '#774c67'
-#     } 
-#     'ANTI-BUDDHIST' :{
-#         'traducao': "ANTI-BUDISTAS",
-#         'qtde' = 0,
-#         'color' = '#b93726'
-#     } 
-#     'ANTI-HINDU' :{
-#         'traducao': "ANTI-HINDUS",
-#         'qtde' = 0,
-#         'color' = '#8b81f0'
-#     } 
-#     'ANTI-HISPANIC' :{
-#         'traducao': "ANTI-HISPÂNICOS",
-#         'qtde' = 0,
-#         'color' = '#585048'
-#     } 
-#     'OTHER' :{
-#         'traducao': "OUTROS",
-#         'qtde' = 0,
-#         'color' = '#c213f2'
-#     } 
-#     'ANTI-WHITE' :{
-#         'traducao': "ANTI-BRANCOS",
-#         'qtde' = 0,
-#         'color' = '#e5786c'
-#     } 
-#     'ANTI-TRANSGENDER' :{
-#         'traducao': "ANTI-TRANSGÊNEROS",
-#         'qtde' = 0,
-#         'color' = '#b94d41'
-#     } 
-#     'ANTI-GENDER NON CONFORMING' :{
-#         'traducao': "ANTI-GENERO VARIANTE",
-#         'qtde' = 0,
-#         'color' = '#eb0dc7'
-#     } 
-#     'ANTI-JEHOVAS WITNESS' :{
-#         'traducao': "ANTI-TESTEMUNHAS DE GEOVÁ",
-#         'qtde' = 0,
-#         'color' = '#8d9ff7'
-#     } 
-#     'ANTI-PHYSICAL DISABILITY' :{
-#         'traducao': "ANTI-DEFICIENTES",
-#         'qtde' = 0,
-#         'color' = '#f19237'
-#     } 
-#     'ANTI-FEMALE HOMOSEXUAL(GAY)' :{
-#         'traducao': "ANTI-HOMOSSEXUAIS(MULHER)",
-#         'qtde' = 0,
-#         'color' = '#b4c92b'
-#     } 
-# }
-
 categorias = {
     '50 YEARS OLD OR MORE' :[
         "50+ ANOS",
@@ -283,30 +160,17 @@ def main():
     dados_json = json.loads(json_raw.text)
 
     for dado in dados_json:
-        # print(json.dumps(dado,indent=4))
         try:
             categorias[dado['bias_motive_description']][1] += 1 
         except KeyError:
             categorias['NAO-CLASSIFICADO'][1] += 1
-    # print(json.dumps(categorias,ensure_ascii=False))
     print(list(categorias.values()))
     
 
-    # categorias_crime_odio = [dado['county'] for dado in dados_json if 'county' in dado]
-    # print(','.join(categorias_crime_odio))
-
 
     with open('data_parliament.json','w') as file:
-        # file.write(json.dumps(categorias,indent=4,ensure_ascii=False))
         file.write(json.dumps(list(categorias.values()),indent=4,ensure_ascii=False))
-        # file.write()
 
-        # for i in range(0,len(categorias_crime_odio)):
-        #     categorias_crime_odio[i] = categorias[categorias_crime_odio[i]]
-        # file.write(','.join(categorias_crime_odio))
-    
-    # with open('tipos_categorias.txt','w') as file:
-    #     file.write("\n".join(list(set(categorias_crime_odio))))
 
 if __name__ == "__main__":
     main()
