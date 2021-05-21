@@ -104,7 +104,7 @@ def main():
 
     # print(json.dumps(dados_tratados,indent=4))
 
-    dados_mapa = "https://data.cityofnewyork.us/resource/5rqd-h5ci.json"
+    dados_mapa = "https://data.cityofnewyork.us/resource/kmub-vria.json"
 
     dados_mapa_bruto = requests.get(dados_mapa)
     dados_mapa_json = json.loads(dados_mapa_bruto.text)
@@ -115,19 +115,19 @@ def main():
     }
 
     for local in dados_mapa_json:
-        maior_crime, maior_qtde = encontra_maior_crime(dados_tratados, local["pct"])
+        maior_crime, maior_qtde = encontra_maior_crime(dados_tratados, local["precinct"])
 
         feature = {
             "type": "Feature",
             "properties": {
-                "name": "Precinct {}".format(local['pct']),
-                "pct": local["pct"],
-                "sector": local["sector"],
+                "name": "Precinct {}".format(local['precinct']),
+                "precinct": local["precinct"],
+                # "sector": local["sector"],
                 "maior_crime": maior_crime,
                 "fill": metadados[maior_crime]["color"],
                 "qtde": maior_qtde,
-                "county": nome_patrulha[local["patrol_bor"]]["county"],
-                "patrol_borough_name": nome_patrulha[local["patrol_bor"]]["nome"]
+                # "county": nome_patrulha[local["patrol_bor"]]["county"],
+                # "patrol_borough_name": nome_patrulha[local["patrol_bor"]]["nome"]
             },
             "geometry": local["the_geom"]
         }
