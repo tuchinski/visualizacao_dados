@@ -1,6 +1,8 @@
 # Dados importantes do grupo 
 ## NYPD Hate Crimes - Crimes de Ódio na cidade de Nova York
 ---
+# A apresentação 2 está na branch [```apresentacao2```](https://github.com/tuchinski/visualizacao_dados/tree/apresentacao2)
+---
 
 Link: https://data.cityofnewyork.us/Public-Safety/NYPD-Hate-Crimes/bqiq-cu78
 
