@@ -133,7 +133,7 @@ def main():
         }
         geojson_export["features"].append(feature)
 
-    with open("new_geojson.geojson", "w") as arq:
+    with open("mapa1.geojson", "w") as arq:
         arq.write(json.dumps(geojson_export))
 
     print("THE END")

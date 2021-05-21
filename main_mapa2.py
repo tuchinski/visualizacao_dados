@@ -101,7 +101,7 @@ for local in dados_mapa_json:
         }
     geojson_export["features"].append(feature)
 
-with open("novo_mapinha.geojson", "w") as arq:
+with open("mapa2.geojson", "w") as arq:
         arq.write(json.dumps(geojson_export))
 
 print("acabou")

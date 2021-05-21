@@ -1,6 +1,6 @@
 import json
 import requests
-from main import metadados, nome_patrulha, remove_zero_esquerda
+from main_primeiro_mapa import metadados, nome_patrulha, remove_zero_esquerda
 
 
 def main():
