@@ -1,5 +1,6 @@
 import json
 import requests
+from requests.models import Response
 
 metadados = {
     "MISDEMEANOR": {
@@ -25,122 +26,88 @@ metadados = {
 
 }
 
-nome_patrulha = {
-    "PBBN": {
-        "nome": "PATROL BORO BKLYN NORTH",
-        "county": "Kings"
+categoria_ofensa = {
+    "Age": {
+        "Qtd": [0,0,0,0,0,0,0,0,0,0,0,0]        
     },
-    "PBBS": {
-        "nome": "PATROL BORO BKLYN SOUTH",
-        "county": "Kings"
+    "Disability": {
+        "Qtd": [0,0,0,0,0,0,0,0,0,0,0,0] 
     },
-    "PBBX": {
-        "nome": "PATROL BORO BRONX",
-        "county": "Bronx"
+    "Ethnicity/National Origin/Ancestry": {
+        "Qtd": [0,0,0,0,0,0,0,0,0,0,0,0] 
     },
-    "PBMN": {
-        "nome": "PATROL MAN NORTH",
-        "county": "New York"
+    "Gender": {
+        "Qtd": [0,0,0,0,0,0,0,0,0,0,0,0] 
     },
-    "PBMS": {
-        "nome": "PATROL BORO MAN SOUTH",
-        "county": "New York"
+    "Race/Color": {
+        "Qtd": [0,0,0,0,0,0,0,0,0,0,0,0] 
     },
-    "PBQN": {
-        "nome": "PATROL BORO QUEENS NORTH",
-        "county": "Queens"
+    "Religion/Religious Practice": {
+        "Qtd": [0,0,0,0,0,0,0,0,0,0,0,0] 
     },
-    "PBQS": {
-        "nome": "PATROL BORO QUEENS SOUTH",
-        "county": "Queens"
+    "Sexual Orientation": {
+        "Qtd": [0,0,0,0,0,0,0,0,0,0,0,0] 
+    }
+}
+
+mes = {
+    '1': {
+        'Nome': "janeiro"
     },
-    "PBSI": {
-        "nome": "PATROL BORO STATEN ISLAND",
-        "county": "Richmond"
+    '2': {
+        'Nome': "fevereiro"
+    },
+    '3': {
+        'Nome': "março"
+    },
+    '4': {
+        'Nome': "abril"
+    },
+    '5': {
+        'Nome': "maio"
+    },
+    '6': {
+        'Nome': "junho"
+    },
+    '7': {
+        'Nome': "julho"
+    },
+    '8': {
+        'Nome': "agosto"
+    },
+    '9': {
+        'Nome': "setembro"
+    },
+    '10': {
+        'Nome': "outubro"
+    },
+    '11': {
+        'Nome': "novembro"
+    },
+    '12': {
+        'Nome': "dezembro"
     }
 }
 
 
-def remove_zero_esquerda(pct):
-    while pct[0] == "0":
-        pct = pct[1:]
-    return pct
+def busca_crime():
+    url_api = "https://data.cityofnewyork.us/resource/bqiq-cu78.json"
+    response = requests.get(url_api)
+    dados_crimes = json.loads(response.text)
 
+    for crime in dados_crimes:
+        categoria_ofensa[crime["offense_category"]]["Qtd"][(int(crime["month_number"]))-1] += 1
 
-def encontra_maior_crime(dict_dados_json, pct):
-    pct = remove_zero_esquerda(pct)
-    # if pct[0] == "0":
-    #     pct = pct[1:]
-    if pct not in dict_dados_json.keys():
-        return ("NO_CRIMES", 0)
-    dado_atual = dict_dados_json[pct]
-    maior_nome = None
-    maior_qtde = -1
-
-    for crime in dado_atual:
-        if dado_atual[crime] > maior_qtde:
-            maior_qtde = dado_atual[crime]
-            maior_nome = crime
-
-    return maior_nome, maior_qtde
-
-
-def main():
-    url_api_dados_crime = "https://data.cityofnewyork.us/resource/bqiq-cu78.json"
-    dados_brutos = requests.get(url_api_dados_crime)
-
-    dados_tratados = {}
-
-    dict_dados_json = json.loads(dados_brutos.text)
-
-    for crime in dict_dados_json:
-
-        try:
-            dados_tratados[crime["complaint_precinct_code"]][crime["offense_description"]] += 1
-            dados_tratados[crime["complaint_precinct_code"]]["crime_total"] += 1
-        except KeyError:
-            if crime['complaint_precinct_code'] not in dados_tratados.keys():
-                dados_tratados[crime["complaint_precinct_code"]] = {}
-                dados_tratados[crime["complaint_precinct_code"]]["crime_total"] = 1
-
-            dados_tratados[crime["complaint_precinct_code"]][crime["offense_description"]] = 1
-
-    # print(json.dumps(dados_tratados,indent=4))
-
-    dados_mapa = "https://data.cityofnewyork.us/resource/5rqd-h5ci.json"
-
-    dados_mapa_bruto = requests.get(dados_mapa)
-    dados_mapa_json = json.loads(dados_mapa_bruto.text)
-
-    geojson_export = {
-        "type": "FeatureCollection",
-        "features": []
-    }
-
-    for local in dados_mapa_json:
-        maior_crime, maior_qtde = encontra_maior_crime(dados_tratados, local["pct"])
-
-        feature = {
-            "type": "Feature",
-            "properties": {
-                "name": "Precinct {}".format(local['pct']),
-                "pct": local["pct"],
-                "sector": local["sector"],
-                "maior_crime": maior_crime,
-                "fill": metadados[maior_crime]["color"],
-                "qtde": maior_qtde,
-                "county": nome_patrulha[local["patrol_bor"]]["county"],
-                "patrol_borough_name": nome_patrulha[local["patrol_bor"]]["nome"]
-            },
-            "geometry": local["the_geom"]
+    retorno = []
+    for cat_crime in categoria_ofensa:
+        crime_atual = {
+            "name": cat_crime,
+            "data": categoria_ofensa[cat_crime]["Qtd"]
         }
-        geojson_export["features"].append(feature)
-
-    with open("new_geojson.geojson", "w") as arq:
-        arq.write(json.dumps(geojson_export))
-
-    print("THE END")
+        retorno.append(crime_atual)
+    print(json.dumps(retorno, indent=4))
 
 
 if __name__ == '__main__':
-    main()
+    #main()
+    busca_crime()
